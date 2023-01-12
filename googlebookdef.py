@@ -1,22 +1,39 @@
 import requests
 
-api_key = 'API KEY HERE'
+api_key = 'Your API key'
 
 #
 def viewList(reading_list):
   print('Reading list:')
-  for book in reading_list:
-    print(f'{book["title"]} by {book["authors"]} ({book["publisher"]})')
+  for i, book in enumerate(reading_list):
+    print(f'{i+1}. {book["title"]} by {book["authors"]} ({book["publisher"]})')
 
 def searchBooks(query):
-  # Send a request to the Google Books API to search for books
-  url = f'https://www.googleapis.com/books/v1/volumes?q={query}&key={api_key}'
-  response = requests.get(url)
-  return response.json()
+  while True:
+    if query == "":
+      print("Invalid query, please enter a valid query: ")
+      query = input()
+    else:
+      # Send a request to the Google Books API to search for books
+      url = f'https://www.googleapis.com/books/v1/volumes?q={query}&key={api_key}'
+      response = requests.get(url)
+      if response.status_code != 200:
+        print("Invalid query, please enter a valid query: ")
+        query = input()
+      else:
+        return response.json()
 
 def displayBookResults(results):
+  # If reutrn none
+  items = results.get('items', [])
+  if not items:
+    return True 
+  # If more then 5
+  if len(items) >= 5:
+    items = items[:5]
+
   # Display a list of 5 books matching the query
-  for i, item in enumerate(results['items'][:5]):
+  for i, item in enumerate(items):
 
     volume_info = item['volumeInfo']
     title = volume_info['title']

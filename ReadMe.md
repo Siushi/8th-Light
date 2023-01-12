@@ -22,3 +22,16 @@ Some books don't have publishers <br />
 Some books could have more then 1 author<br />
 
 If the user choices more then 5 it will grab it. Need to limit user to 1-5
+
+Edits 1/11/23 per feedback
+Some problematic inputs cause the app to crash, like " " or submitting blank input
+	Forces users to enter valid input loops until
+
+What would happen if the API returns fewer than five items? Or no items at all (in the case that api call returned an error)?
+	if less then 5 will display all. No items will say no items try again and invalid will say invalid
+
+It would be great to see some tests which handle these cases which cause the app to crash, testing the sad paths as well as the happy path.
+	Created test that test sad path but program should not crash I believe. Didn't bother to add a sad test for addBook as it will never be called unless it has proper inputs
+
+Also, once you make a query, you cannot make another query without adding a book to the reading list or quitting. Is there a way to refactor so that you can make another request without having to quit the program or add to the reading list
+	Refactor the code so that there are more choices in the start and still shows list at the end
